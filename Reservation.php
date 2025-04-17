@@ -1,8 +1,10 @@
 <?php
+require_once 'LoggerTrait.php';
 
 class Reservation
 {
-    use LoggerTrait;
+    use LoggerTrait; 
+
     protected $vehicule;
     protected $client;
     protected $dateDebut;
@@ -12,27 +14,23 @@ class Reservation
     public function __construct($vehicule, $client, $dateDebut, $nbJours, $status)
     {
         $this->vehicule = $vehicule;
-        $this->client =  $client;
+        $this->client = $client;
         $this->dateDebut = $dateDebut;
         $this->nbJours = $nbJours;
         $this->status = $status;
     }
 
-
-    public function calculerMontant($price) {
-        $montant = $price * $this->nbJours;
-        return " le montant total a paye est $montant"; 
+    public function calculerMontant() {
+        $montant = $this->vehicule->prixJour * $this->nbJours; 
+        $this->logAction("Calcul du montant pour la réservation : $montant"); 
+        return "Le montant total à payer est : $montant"; 
     }
 
-    public function confirmer(){
+    public function confirmer() {
         return $this->status === "accepted";
     }
 
-    public function annuler(){
-        return $this->status === "annuler";
-    }
-
-    public function logAction($message){
-        echo " hello world ";
+    public function annuler() {
+        return $this->status === "cancelled";
     }
 }

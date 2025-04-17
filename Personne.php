@@ -1,12 +1,12 @@
 <?php 
 
 abstract class Personne {
-    protected $id;
-    protected $nom; 
-    protected $prenom; 
-    protected $email;
+    protected int $id;
+    protected string $nom;
+    protected string $prenom;
+    protected string $email;
 
-    public function __construct($id, $nom, $prenom, $email)
+    public function __construct(int $id, string $nom, string $prenom, string $email)
     {
         $this->id = $id;
         $this->nom = $nom;
@@ -14,5 +14,21 @@ abstract class Personne {
         $this->email = $email;
     }
 
-    public abstract function afficherProfil();
+    public function getId(): int {
+        return $this->id;
+    }
+
+    public function getNom(): string {
+        return $this->nom;
+    }
+
+    public function getPrenom(): string {
+        return $this->prenom;
+    }
+
+    public function getEmail(): string {
+        return $this->email;
+    }
+
+    public abstract function afficherProfil(): string;
 }

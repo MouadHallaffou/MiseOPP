@@ -3,35 +3,43 @@
 require_once 'Vehicule.php';
 require_once 'ReservableInterface.php';
 
-class Voiture extends Vehicule implements ReservableInterface{
+class Voiture extends Vehicule implements ReservableInterface
+{
     protected int $nbPortes;
-    protected int $transmission;
+    protected string $transmission;
 
-    public function __construct($id, $immatriculation, $marque, $modele,$transmission,$prixJour, $disponible,$nbPortes)
+    public function __construct(int $id, string $immatriculation, string $marque, string $modele, string $transmission, float $prixJour, bool $disponible, int $nbPortes)
     {
-        parent::__construct($id, $immatriculation, $marque, $modele, $prixJour, $disponible);
+        parent::__construct($id, $immatriculation, $marque, $modele, $prixJour, $disponible, 'Voiture');
         $this->nbPortes = $nbPortes;
         $this->transmission = $transmission;
     }
 
-    public function reserver($client, $dateDebut, int $nbJours){
-        if(empty($immatriculation)){
-            return " le client avec l'id : $this->id , et le name : $client, reserve apartir de : $dateDebut, devant : $nbJours";
-        }else {
-            return "la voiture demande ni pas disponible a ce moment";
-        }   
+    public function reserver(Client $client, DateTime $dateDebut, int $nbJours): Reservation
+    {
+        if ($this->estDisponible()) {
+            $reservation = new Reservation($this, $client, $dateDebut, $nbJours, 'En attente');
+            return $reservation;
+        } else {
+            echo "La voiture n'est pas disponible à ce moment.\n";
+            // return null;
+        }
     }
 
-    public function afficherDetails() {
-        return "immatriculation : $this->immatriculation, marque : $this->marque, modele : $this->modele, prixJour : $this->prixJour, disponible : $this->disponible, nbPortes: $this->nbPortes";
-    }
-  
-    public function  getTransmission(){
-        return " le transmission du voiture est : $this->transmission";
-    }
-
-    public function  getType(){
-        return " le type du voiture est : $this->type";
+    public function afficherDetails(): void
+    {
+        parent::afficherDetails();
+        echo "Nombre de portes: {$this->nbPortes}\n";
+        echo "Transmission: {$this->transmission}\n";
     }
 
+    public function getTransmission(): string
+    {
+        return "La transmission de la voiture est : {$this->transmission}";
+    }
+
+    public function getType(): string
+    {
+        return 'Voiture';
+    }
 }

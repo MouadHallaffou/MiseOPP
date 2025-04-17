@@ -1,31 +1,41 @@
 <?php
-
 require_once 'Vehicule.php';
 require_once 'ReservableInterface.php';
 
-class Camion extends Vehicule implements ReservableInterface{
+class Camion extends Vehicule implements ReservableInterface
+{
     protected float $capaciteTonnage;
 
-    public function __construct($id, $immatriculation, $marque, $modele,$type,$prixJour, $disponible,$capaciteTonnage)
+    public function __construct(int $id, string $immatriculation, string $marque, string $modele, float $prixJour, bool $disponible, float $capaciteTonnage)
     {
-        parent::__construct($id, $immatriculation, $marque, $modele,$type, $prixJour, $disponible);
+        parent::__construct($id, $immatriculation, $marque, $modele, $prixJour, $disponible, 'Camion');
         $this->capaciteTonnage = $capaciteTonnage;
     }
 
-    public function reserver($client, $dateDebut, int $nbJours){
-        if(empty($immatriculation)){
-            return " le client avec l'id : $this->id , et le name : $client, reserve apartir de : $dateDebut, devant : $nbJours";
-        }else {
-            return "la moto demande ni pas disponible a ce moment";
-        }   
+    public function reserver(Client $client, DateTime $dateDebut, int $nbJours): Reservation
+    {
+        if ($this->estDisponible()) {
+            $reservation = new Reservation($this, $client, $dateDebut, $nbJours, 'En attente');
+            return $reservation;
+        } else {
+            echo "Le camion n'est pas disponible à ce moment.\n";
+            return null;
+        }
     }
 
-    public function afficherDetails() {
-        return "immatriculation : $this->immatriculation, marque : $this->marque, modele : $this->modele, prixJour : $this->prixJour, disponible : $this->disponible, capaciteTonnage: $this->capaciteTonnage";
-    }
-  
-    public function  getType(){
-        return " le type du moto est : $this->type";
+    public function afficherDetails(): void
+    {
+        parent::afficherDetails();
+        echo "Capacité de tonnage: {$this->capaciteTonnage} tonnes\n";
     }
 
+    public function getCapaciteTonnage(): string
+    {
+        return "La capacité du camion est : {$this->capaciteTonnage} tonnes";
+    }
+
+    public function getType(): string
+    {
+        return 'Camion';
+    }
 }

@@ -1,5 +1,7 @@
 <?php
 
-interface ReservableInterface{
-    public function reserver($client, $dateDebut, int $nbJours);
+
+interface ReservableInterface
+{
+    public function reserver(Client $client, DateTime $dateDebut, int $nbJours): Reservation;
 }

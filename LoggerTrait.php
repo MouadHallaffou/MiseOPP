@@ -1,8 +1,7 @@
-<?php 
+<?php
 
 trait LoggerTrait {
-    public function logAction(string $message){
-        return "$message";
+    public function log($message) {
+        echo "[LOG]: $message\n";
     }
-
 }
