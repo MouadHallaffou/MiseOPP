@@ -22,7 +22,7 @@ class Voiture extends Vehicule implements ReservableInterface
             return $reservation;
         } else {
             echo "La voiture n'est pas disponible à ce moment.\n";
-            // return null;
+            return null;
         }
     }
 

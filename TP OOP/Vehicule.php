@@ -37,10 +37,10 @@ abstract class Vehicule
     public function afficherDetails(): void
     {
         echo "Immatriculation: {$this->immatriculation}\n";
-        echo "Marque: {$this->marque}\n";
-        echo "Modèle: {$this->modele}\n";
-        echo "Prix par jour: {$this->prixJour} MAD\n";
-        echo "Disponible: " . ($this->disponible ? "Oui" : "Non") . "\n";
+        echo "Marque: {$this->marque},\n";
+        echo "Modèle: {$this->modele},\n";
+        echo "Prix par jour: {$this->prixJour}, MAD\n";
+        echo "Disponible: " . ($this->disponible ? "Oui" : "Non") . "," . "\n";
     }
 
     public function calculerPrix(int $jours): float
