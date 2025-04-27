@@ -147,4 +147,4 @@ class Article
         echo " dataPublication {$this->dataPublication} \n";
         echo " auteur:" . $this->auteur->getNom() . "\n";
     }
-}
+} 
